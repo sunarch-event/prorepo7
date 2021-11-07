@@ -180,21 +180,21 @@ public class PerformanceService {
         
         List<UserMaster> userMasterList = new ArrayList<UserMaster>();
         
-        for(int i = 0; i < userInfoList.size(); i++) {
+        for(UserInfo userInfo : userInfoList) {
             UserMaster userMaster = new UserMaster();
-            userMaster.setId(userInfoList.get(i).getId());
-            userMaster.setLastName(userInfoList.get(i).getLastName());
-            userMaster.setFirstName(userInfoList.get(i).getFirstName());
-            userMaster.setPrefectures(userInfoList.get(i).getPrefectures());
-            userMaster.setCity(userInfoList.get(i).getCity());
-            userMaster.setBloodType(userInfoList.get(i).getBloodType());
-            for(int j = 0; j < userHobbyList.size(); j++) {
-                if(userMaster.getId().equals(userHobbyList.get(j).getId())) {
-                    userMaster.setHobby1(userHobbyList.get(j).getHobby1());
-                    userMaster.setHobby2(userHobbyList.get(j).getHobby2());
-                    userMaster.setHobby3(userHobbyList.get(j).getHobby3());
-                    userMaster.setHobby4(userHobbyList.get(j).getHobby4());
-                    userMaster.setHobby5(userHobbyList.get(j).getHobby5());
+            userMaster.setId(userInfo.getId());
+            userMaster.setLastName(userInfo.getLastName());
+            userMaster.setFirstName(userInfo.getFirstName());
+            userMaster.setPrefectures(userInfo.getPrefectures());
+            userMaster.setCity(userInfo.getCity());
+            userMaster.setBloodType(userInfo.getBloodType());
+            for(UserHobby userHobby : userHobbyList) {
+                if(userMaster.getId().equals(userHobby.getId())) {
+                    userMaster.setHobby1(userHobby.getHobby1());
+                    userMaster.setHobby2(userHobby.getHobby2());
+                    userMaster.setHobby3(userHobby.getHobby3());
+                    userMaster.setHobby4(userHobby.getHobby4());
+                    userMaster.setHobby5(userHobby.getHobby5());
                     break;
                 }
             }
