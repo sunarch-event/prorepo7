@@ -80,20 +80,25 @@ public class PerformanceService {
         
         // CSVを取得・CSVファイルをDBに登録する
         //ファイル読み込みで使用する3つのクラス
+        FileReader fr = null;
+        BufferedReader br = null;
         List<String> csvFile = new ArrayList<String>();
         try {
 
-            //CSVファイルのファイルパスを取得する     
-            Path path = Paths.get("data/userInfo.csv");
-      
+            //読み込みファイルのインスタンス生成
+            //ファイル名を指定する
+            fr = new FileReader(new File("data/userInfo.csv"));
+            br = new BufferedReader(fr);
+            
+
             //読み込み行
-            List<String> readLines = Files.readAllLines(path);
+            String readLine;
 
             //読み込み行数の管理
             int i = 0;
 
             //1行ずつ読み込みを行う
-          for(String readLine : readLines) {
+            while ((readLine = br.readLine()) != null) {
                 i++;
                 //データ内容をコンソールに表示する
                 log.info("-------------------------------");
@@ -105,6 +110,11 @@ public class PerformanceService {
             }
         } catch (Exception e) {
             log.info("csv read error", e);
+        } finally {
+            try {
+                br.close();
+            } catch (Exception e) {
+            }
         }
 
         try {
@@ -293,30 +303,17 @@ public class PerformanceService {
         }
         
         // CSVを取得・CSVファイルをDBに登録する
-        //ファイル読み込みで使用する3つのクラス
-        FileReader fr = null;
-        BufferedReader br = null;
         List<String> csvFile = new ArrayList<String>();
         try {
 
-            //読み込みファイルのインスタンス生成
-            //ファイル名を指定する
-            fr = new FileReader(new File("data/assertionData.csv"));
-            br = new BufferedReader(fr);
-
+            //CSVファイルのファイルパスを取得する     
+            Path path = Paths.get("data/assertionData.csv");
+      
             //読み込み行
-            String readLine;
-            //1行ずつ読み込みを行う
-            while ((readLine = br.readLine()) != null) {
-                csvFile.add(readLine);
-            }
+            csvFile = Files.readAllLines(path);
+
         } catch (Exception e) {
             log.info("csv read error", e);
-        } finally {
-            try {
-                br.close();
-            } catch (Exception e) {
-            }
         }
         for(String line : csvFile) {
             boolean exsits = false;
