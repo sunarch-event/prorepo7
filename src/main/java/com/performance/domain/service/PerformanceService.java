@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -77,25 +80,20 @@ public class PerformanceService {
         
         // CSVを取得・CSVファイルをDBに登録する
         //ファイル読み込みで使用する3つのクラス
-        FileReader fr = null;
-        BufferedReader br = null;
         List<String> csvFile = new ArrayList<String>();
         try {
 
-            //読み込みファイルのインスタンス生成
-            //ファイル名を指定する
-            fr = new FileReader(new File("data/userInfo.csv"));
-            br = new BufferedReader(fr);
-            
-
+            //CSVファイルのファイルパスを取得する     
+            Path path = Paths.get("data/userInfo.csv");
+      
             //読み込み行
-            String readLine;
+            List<String> readLines = Files.readAllLines(path);
 
             //読み込み行数の管理
             int i = 0;
 
             //1行ずつ読み込みを行う
-            while ((readLine = br.readLine()) != null) {
+          for(String readLine : readLines) {
                 i++;
                 //データ内容をコンソールに表示する
                 log.info("-------------------------------");
@@ -107,11 +105,6 @@ public class PerformanceService {
             }
         } catch (Exception e) {
             log.info("csv read error", e);
-        } finally {
-            try {
-                br.close();
-            } catch (Exception e) {
-            }
         }
 
         try {
